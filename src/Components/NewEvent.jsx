@@ -14,17 +14,22 @@ import { getAllIncident, saveItem } from '../utils/firebaseFunction';
 import { useStateValue } from '../Context/StateProvider';
 import { actionType } from '../Context/reducer';
 import { doc, setDoc } from 'firebase/firestore';
+import { useNavigate } from 'react-router-dom';
 
 const NewEvent = () => {
 	const [title, setTitle] = useState('');
 	const [desc, setDesc] = useState('');
 	const [category, setCategory] = useState(null);
-	const [location, setLocation] = useState('');
+	const [location, setLocation] = useState(null);
 	const [pin, setPin] = useState(null);
 	const [imageAsset, setImageAsset] = useState(null);
 	const [isLoading, setIsLoading] = useState(false);
+	const [isLoad, setIsLoad] = useState(false);
+	const [err, setErr] = useState(false);
+	const [msg, setMsg] = useState(null);
 	const [{ incident }, dispatch] = useStateValue();
 	const text = 'Location Set';
+	const navigate = useNavigate();
 
 	const uploadImage = (e) => {
 		setIsLoading(true);
@@ -117,12 +122,12 @@ const NewEvent = () => {
 	};
 
 	const getLocationOnClick = async () => {
-		setIsLoading(true);
+		setIsLoad(true);
 		try {
 			const position = await userLocation();
 			setLocation(position);
 			setPin(text);
-			setIsLoading(false);
+			setIsLoad(false);
 			console.log('User location obtained:', position);
 			// Do whatever you want with the position here
 		} catch (error) {
@@ -139,7 +144,12 @@ const NewEvent = () => {
 	const shareEvent = async () => {
 		try {
 			if (!title || !desc || !location || !category) {
-				console.log('Field cannot be empty');
+				setErr(true);
+				setMsg('Field cannot be empty');
+				setTimeout(() => {
+					setErr(false);
+				}, 4000);
+				s;
 			} else {
 				const data = {
 					id: `${Date.now()}`,
@@ -152,6 +162,7 @@ const NewEvent = () => {
 				await setDoc(doc(firestore, 'incident', `${Date.now()}`), {
 					data,
 				});
+				navigate('/');
 				// saveItem(data);
 				clearData();
 			}
@@ -176,6 +187,12 @@ const NewEvent = () => {
 			<div className=' my-10'>
 				<p className=' font-medium text-3xl'>Upload Incident</p>
 			</div>
+			{err && (
+				<div className=' bg-red-500 py-2 px-4 rounded-lg mb-10 text-white'>
+					{err && msg}
+				</div>
+			)}
+
 			<div className='group flex justify-center items-center flex-col border-2 border-dotted border-gray-300 w-1/2 h-1/2 md:h-340 cursor-pointer rounded-lg'>
 				{isLoading ? (
 					<Loader />
@@ -255,17 +272,21 @@ const NewEvent = () => {
 							))}
 					</select>
 				</div>
-				<button onClick={getLocationOnClick}>
-					{isLoading ? <Loader /> : pin !== null ? pin : 'Get location'}
-				</button>
 				<button
-					className=' flex items-center justify-center gap-2 py-1 px-2 border-black rounded-xl border hover:bg-black hover:text-white'
-					onClick={() => {
-						shareEvent();
-					}}>
-					<p>Share</p>
-					<FaShare />
+					onClick={getLocationOnClick}
+					className='py-1 px-2 border-black rounded-xl border hover:bg-black hover:text-white'>
+					{isLoad ? <Loader /> : pin !== null ? pin : 'Get location'}
 				</button>
+				{location !== null ? (
+					<button
+						className='flex items-center justify-center gap-2 py-1 px-2 border-black rounded-xl border hover:bg-black hover:text-white'
+						onClick={shareEvent}>
+						<p>Share</p>
+						<FaShare />
+					</button>
+				) : (
+					''
+				)}
 			</div>
 		</div>
 	);
