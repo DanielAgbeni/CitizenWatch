@@ -1,5 +1,6 @@
 export const actionType = {
 	SET_USER: 'SET_USER',
+	SET_INCIDENT: 'SET_INCIDENT',
 };
 const reducer = (state, action) => {
 	// console.log(action);
@@ -9,6 +10,11 @@ const reducer = (state, action) => {
 			return {
 				...state,
 				user: action.user,
+			};
+		case actionType.SET_INCIDENT:
+			return {
+				...state,
+				incident: action.incident,
 			};
 		default:
 			return state;

@@ -7,7 +7,7 @@ const NavBar = () => {
 	const [{ user }, dispatch] = useStateValue();
 	// console.log(user);
 	return (
-		<div className=' flex items-center justify-between px-10 py-3 absolute top-0 w-full'>
+		<div className=' flex items-center justify-between px-10 py-5 md:py-3 absolute top-0 w-full'>
 			<div className=' flex items-center justify-center gap-2'>
 				<img
 					src={logo}
@@ -17,7 +17,9 @@ const NavBar = () => {
 				<h1 className=' font-semibold text-xl'>CitizenWatch</h1>
 			</div>
 			<div className=' text-4xl flex items-center justify-center gap-2'>
-				<p className=' text-xl'>{user ? user.displayName : ''}</p>
+				<p className=' text-xl hidden md:flex'>
+					{user ? user.displayName : ''}
+				</p>
 				{user && user.photoURL ? (
 					<img
 						src={user.photoURL}
