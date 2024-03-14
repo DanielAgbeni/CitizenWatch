@@ -24,15 +24,17 @@ const NavBar = () => {
 				<p className=' text-xl hidden md:flex'>
 					{user ? user.displayName : ''}
 				</p>
-				{user && user.photoURL ? (
-					<img
-						src={user.photoURL}
-						alt='Profile'
-						className=' h-10 w-10 rounded-full'
-					/>
-				) : (
-					<FaRegUserCircle />
-				)}
+				<Link to={'/signup'}>
+					{user && user.photoURL ? (
+						<img
+							src={user.photoURL}
+							alt='Profile'
+							className=' h-10 w-10 rounded-full'
+						/>
+					) : (
+						<FaRegUserCircle />
+					)}
+				</Link>
 			</div>
 		</div>
 	);

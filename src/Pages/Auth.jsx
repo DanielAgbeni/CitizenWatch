@@ -1,14 +1,21 @@
 import React from 'react';
 import { FcGoogle } from 'react-icons/fc';
 import { app } from '../../firebase';
-import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+import {
+	getAuth,
+	signInWithPopup,
+	GoogleAuthProvider,
+	signOut,
+} from 'firebase/auth';
 import { useStateValue } from '../Context/StateProvider';
 import { actionType } from '../Context/reducer';
+import { useNavigate } from 'react-router-dom';
 
 const Auth = () => {
 	const auth = getAuth(app);
 	const provider = new GoogleAuthProvider();
 	const [{ user }, dispatch] = useStateValue();
+	const navigate = useNavigate();
 
 	const signin = async () => {
 		const {
@@ -22,7 +29,9 @@ const Auth = () => {
 	};
 	const signout = () => {
 		localStorage.clear();
-
+		signOut(auth).then(() => {
+			navigate('/login');
+		});
 		dispatch({
 			type: actionType.SET_USER,
 			user: null,
