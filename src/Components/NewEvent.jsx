@@ -9,10 +9,11 @@ import {
 	ref,
 	uploadBytesResumable,
 } from 'firebase/storage';
-import { storage } from '../../firebase';
+import { firestore, storage } from '../../firebase';
 import { getAllIncident, saveItem } from '../utils/firebaseFunction';
 import { useStateValue } from '../Context/StateProvider';
 import { actionType } from '../Context/reducer';
+import { doc, setDoc } from 'firebase/firestore';
 
 const NewEvent = () => {
 	const [title, setTitle] = useState('');
@@ -135,7 +136,7 @@ const NewEvent = () => {
 		setLocation('');
 		setCategory('Select Category');
 	};
-	const shareEvent = () => {
+	const shareEvent = async () => {
 		try {
 			if (!title || !desc || !location || !category) {
 				console.log('Field cannot be empty');
@@ -148,11 +149,16 @@ const NewEvent = () => {
 					location: location,
 					imageURL: imageAsset,
 				};
-				saveItem(data);
+				await setDoc(doc(firestore, 'incident', `${Date.now()}`), {
+					data,
+				});
+				// saveItem(data);
 				clearData();
 			}
-		} catch (error) {}
-		fetchData();
+		} catch (error) {
+			console.log(error);
+		}
+		// fetchData();
 	};
 
 	const fetchData = async () => {
