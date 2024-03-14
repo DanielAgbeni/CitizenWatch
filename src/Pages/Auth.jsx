@@ -26,11 +26,12 @@ const Auth = () => {
 			user: providerData[0],
 		});
 		localStorage.setItem('user', JSON.stringify(providerData[0]));
+		navigate('/');
 	};
 	const signout = () => {
 		localStorage.clear();
 		signOut(auth).then(() => {
-			navigate('/login');
+			navigate('/');
 		});
 		dispatch({
 			type: actionType.SET_USER,
