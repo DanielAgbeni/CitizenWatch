@@ -8,7 +8,7 @@ const NavBar = () => {
 	const [{ user }, dispatch] = useStateValue();
 	// console.log(user);
 	return (
-		<div className=' flex items-center justify-between px-10 py-5 md:py-3 absolute top-0 w-full'>
+		<div className=' flex items-center justify-between px-10 py-5 md:py-3 fixed bg-white top-0 w-full'>
 			<Link to={'/'}>
 				<div className=' flex items-center justify-center gap-2'>
 					<img
