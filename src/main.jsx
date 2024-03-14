@@ -5,13 +5,16 @@ import './index.css';
 import { StateProvider } from './Context/StateProvider.jsx';
 import { initialState } from './Context/initState.jsx';
 import reducer from './Context/reducer.jsx';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
 	<React.StrictMode>
-		<StateProvider
-			initialState={initialState}
-			reducer={reducer}>
-			<App />
-		</StateProvider>
+		<Router>
+			<StateProvider
+				initialState={initialState}
+				reducer={reducer}>
+				<App />
+			</StateProvider>
+		</Router>
 	</React.StrictMode>,
 );
