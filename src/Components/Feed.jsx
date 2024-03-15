@@ -28,7 +28,7 @@ const Feed = () => {
 						.reverse()
 						.map((incident, index) => (
 							<div
-								className='max-w-sm w-full bg-white shadow-md rounded-lg overflow-hidden'
+								className='max-w-sm w-full bg-white shadow-md rounded-lg overflow-hidden relative'
 								key={index}>
 								<img
 									className='w-full h-40 object-cover'
@@ -40,6 +40,9 @@ const Feed = () => {
 										{incident.data.title}
 									</h3>
 									<p className='text-gray-700'>{incident.data.desc}</p>
+									<div className='text-gray-500 py-1 px-1 bg-slate-300 rounded-md'>
+										{incident.data.category}
+									</div>
 									<div className='flex items-center justify-center gap-2'>
 										<p className='text-gray-700'>
 											Latitude: {incident.data.location.latitude}

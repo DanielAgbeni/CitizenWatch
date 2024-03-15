@@ -1,8 +1,10 @@
-# React + Vite
+# Citizen Watch
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a web based app to check out incident in around you
+Note this is  demo app and all incident in the homepage are not true
+You will find the APK file in this repo Install and run
+for the web version visit <https://citizen-watch.netlify.app/>
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Built with vite + react
+npm run dev
+to launch the app
